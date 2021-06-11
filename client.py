@@ -58,8 +58,11 @@ def receive(client_socket):
             msg = BUFFER[:BUFFER.index('\n')]
             BUFFER = BUFFER[BUFFER.index('\n') + 1:]
             return msg
-
-        data = client_socket.recv(500 - len(BUFFER)).decode()
+        try:
+            data = client_socket.recv(500 - len(BUFFER)).decode()
+        except socket.timeout:
+            sys.exit(7)
+        
         if not data:
             sys.exit(4)
 
@@ -124,6 +127,7 @@ if __name__ == '__main__':
             f'Usage: python3 {sys.argv[0]} <address> <port> [single_msg_single_pkg | single_msg_multiple_pkg | multiple_msg_single_pkg]')
         sys.exit(6)
     client_socket = create_socket(sys.argv[1], int(sys.argv[2]))
+    client_socket.settimeout(5)
 
     if sys.argv[3] == 'single_msg_single_pkg':
         run_single_msg_single_pkg(client_socket)
