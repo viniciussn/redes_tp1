@@ -38,11 +38,9 @@ if __name__ == '__main__':
     exec_path = sys.argv[1]
     port = int(sys.argv[2])
 
-    if not exec_path.startswith('.'):
-        if not exec_path.startswith('/'):
-            exec_path = './' + exec_path
-        else:
-            exec_path = '.' + exec_path
+    if not exec_path.startswith('/'):
+        print('provide the full path to the executable')
+        sys.exit(0)
 
     for address_family in ['v4', 'v6']:
         for msg_type in ['single_msg_single_pkg', 'single_msg_multiple_pkg', 'multiple_msg_single_pkg']:
