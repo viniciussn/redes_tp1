@@ -57,7 +57,7 @@ add 47 47
 add 48 48
 list
 rm 0 0
-list 
+list
 rm 47 47
 list
 add 0 0
